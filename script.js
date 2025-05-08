@@ -5,13 +5,15 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
 }).addTo(map);
 
+const GrupoDeMarcadores = L.layerGroup().addTo(map);
+
 // Carrega marcadores do JSON
 fetch('locais.json')
   .then(response => response.json())
   .then(locais => {
     locais.forEach(local => {
       L.marker(local.coords)
-        .addTo(map)
+        .addTo(GrupoDeMarcadores)
         .bindPopup(local.nome);
     });
   })
@@ -33,33 +35,45 @@ const botaoFiltro = document.getElementById("filtro");
 
   botaoFiltro.onclick = function () {
     const filterBox = document.getElementById("box");
-    filterBox.innerHTML = "<div class='filterbar'>FUI CLICADO </div>"
+    filterBox.innerHTML = "<div ><button class='filtro'>PRÉDIOS</button></div>"
+    filterBox.innerHTML += "<div ><button class='filtro'>Alimentação</button></div>"
+    filterBox.innerHTML += "<div ><button class='filtro'>Entretenimento</button></div>"
     
     alert('mensagem aleatoria');
-    map._panes.markerPane.remove(); //aqui alterei para apagar
   }
+  
+
+
+
+
+
 const searchbar = document.getElementById("searchbar");
-  searchbar.addEventListener("input", function(){
+  searchbar.addEventListener("input", async function(){
     const digitado = this.value;
     console.log(digitado);
     if(digitado){
-      const localEncontrado = locais.find(local => locais.json === digitado);
 
-if (localEncontrado) {
-  console.log("Local encontrado:", localEncontrado);
-} else {
-  console.log("Local não encontrado");
-}
-      fetch('locais.json')
-        .then(response => response.json())
-        .then(locais => {
-        locais.forEach(local => {
-          L.marker(local.coords)
-          .addTo(map)
-          .bindPopup(local.nome);
-        });
-      })
-      Filtrode(digitado);
+      
+      const data = await fetch('locais.json')
+      const locais = await data.json()
+      const localEncontrado = locais.find( local => local.nome  === digitado);
+
+
+
+      console.log(locais);
+
+      if (localEncontrado) {
+        GrupoDeMarcadores.clearLayers()
+        console.log("Local encontrado:", localEncontrado);
+        L.marker(localEncontrado.coords)
+        .addTo(GrupoDeMarcadores)
+        .bindPopup(localEncontrado.nome);
+      }else{
+        alert('Local inexistente, escreva utilizando letras maiusculas no inicio de cada palavra e respeitando acentos')
+        GrupoDeMarcadores.clearLayers()
+        
+      }
+           
     }else{
       mostretudo
     }
