@@ -154,6 +154,18 @@
     background-color: rgb(170, 170, 170);
     display: inline 
   }
-  filterbar{
+  .filtro{
     background-color: #f2f2f2;
+    border: 1px solid gray;
+    width: 110px;
+    height:20px;
+    border-radius: 20px;
+    margin: 0.3rem 0.2rem 0.5rem 1rem;
+  }
+  .fundo-bot{
+    background-color:#f2f2f2 ;
+  }
+
+  #box {
+    display: none;
   }

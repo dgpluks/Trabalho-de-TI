@@ -1,39 +1,48 @@
 [
     {
       "nome": "Posto Médico",
-      "coords": [-19.9185, -43.9988]
+      "coords": [-19.9185, -43.9988],
+      "filtro":"ajuda"
     },
     {
       "nome": "Boca do Forno",
-      "coords": [-19.9180, -43.9994]
+      "coords": [-19.9180, -43.9994],
+      "filtro":"Alimentacao"
     },
     {
       "nome": "Biblioteca",
-      "coords": [-19.9187, -44.0002]
+      "coords": [-19.9187, -44.0002],
+      "filtro":"entretenimento"
     },
     {
       "nome": "Prédio 43",
-      "coords": [-19.9189, -44.0006]
+      "coords": [-19.9189, -44.0006],
+      "filtro":"Predio"
     },
     {
       "nome": "Prédio 34",
-      "coords": [-19.9195, -44.0000]
+      "coords": [-19.9195, -44.0000],
+      "filtro":"Predio"
     },
     {
       "nome": "Teatro João Paulo II",
-      "coords": [-19.9192, -43.9989]
+      "coords": [-19.9192, -43.9989],
+      "filtro":"entretenimento"
     },
     {
       "nome": "DCE",
-      "coords": [-19.9190, -44.0010]
+      "coords": [-19.9190, -44.0010],
+      "filtro":"entretenimento"
     },
     {
       "nome": "Complexo Esportivo",
-      "coords": [-19.9201, -43.9997]
+      "coords": [-19.9201, -43.9997],
+      "filtro":"entretenimento"
     },
     {
       "nome": "Secretaria",
-      "coords": [-19.9184, -44.0004]
+      "coords": [-19.9184, -44.0004],
+      "filtro":"ajuda"
     }
   ]
   

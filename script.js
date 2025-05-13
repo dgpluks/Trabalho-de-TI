@@ -27,19 +27,60 @@ document.querySelectorAll('.icons i').forEach(icon => {
     icon.classList.toggle('active');
   });
 });
-
+var filtro = ''
 
 
 
 const botaoFiltro = document.getElementById("filtro");
 
+    const bot1 = document.getElementById("Predio");
+    const bot2 = document.getElementById("Alimentacao");
+    const bot3 = document.getElementById("entretenimento");
+    const bot4 = document.getElementById("ajuda");
+    const box = document.getElementById("box");
+
+
   botaoFiltro.onclick = function () {
     const filterBox = document.getElementById("box");
-    filterBox.innerHTML = "<div ><button class='filtro'>PRÉDIOS</button></div>"
-    filterBox.innerHTML += "<div ><button class='filtro'>Alimentação</button></div>"
-    filterBox.innerHTML += "<div ><button class='filtro'>Entretenimento</button></div>"
+    if(box.style.display === "block"){
+      box.style.display = "none"
+    }else{
+      box.style.display = "block"
+    }
     
-    alert('mensagem aleatoria');
+  
+  }
+  
+  
+  
+  bot1.addEventListener("click", async function(){
+    filtro = "Predio";
+    await buscarFiltro ()
+  })
+  bot2.addEventListener("click", async function(){
+    filtro = "Alimentacao";
+    await buscarFiltro ()
+  })
+  bot3.addEventListener("click", async function(){
+    filtro = "entretenimento";
+    await buscarFiltro ()
+  })
+  bot4.addEventListener("click", async function(){
+    filtro = "ajuda";
+    await buscarFiltro ()
+  })
+
+  async function buscarFiltro (){
+    const data = await fetch('locais.json')
+    const locais = await data.json()
+    GrupoDeMarcadores.clearLayers()
+    const localEncontrado = locais.filter( local => local.filtro  === filtro);
+    localEncontrado.forEach((local)=>{
+      
+      L.marker(local.coords)
+      .addTo(GrupoDeMarcadores)
+      .bindPopup(local.nome);
+    })
   }
   
 
@@ -47,22 +88,37 @@ const botaoFiltro = document.getElementById("filtro");
 
 
 
-const searchbar = document.getElementById("searchbar");
-  searchbar.addEventListener("input", async function(){
-    const digitado = this.value;
-    console.log(digitado);
-    if(digitado){
-
-      
-      const data = await fetch('locais.json')
-      const locais = await data.json()
-      const localEncontrado = locais.find( local => local.nome  === digitado);
 
 
 
-      console.log(locais);
 
-      if (localEncontrado) {
+
+
+
+
+
+  
+
+  var digitado = '';
+
+
+  async function buscarLocal (){
+        const data = await fetch('locais.json')
+        const locais = await data.json()
+        console.log("dada", locais)
+     
+
+        const localEncontrado = locais.find( local => local.nome  === digitado);
+      console.log(localEncontrado)
+      if(digitado===''){
+        GrupoDeMarcadores.clearLayers()
+
+        locais.forEach(local => {
+          L.marker(local.coords)
+          .addTo(GrupoDeMarcadores)
+          .bindPopup(local.nome);
+        });
+      }else if (localEncontrado) {
         GrupoDeMarcadores.clearLayers()
         console.log("Local encontrado:", localEncontrado);
         L.marker(localEncontrado.coords)
@@ -73,9 +129,15 @@ const searchbar = document.getElementById("searchbar");
         GrupoDeMarcadores.clearLayers()
         
       }
-           
-    }else{
-      mostretudo
-    }
+  }
+
+  const searchbar = document.getElementById("searchbar");
+  const OKbutton = document.getElementById('ok');
+  OKbutton.addEventListener("click", async function(){
+    await buscarLocal()
+    
   })
 
+  searchbar.addEventListener("input", async function(e){
+    digitado = e.target.value;
+  })
